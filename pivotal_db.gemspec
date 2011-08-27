@@ -19,4 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "rspec"
+  s.add_dependency "pivotal-tracker", "~>0.4"
+  s.add_dependency "sqlite3", "~>1.3"
 end
