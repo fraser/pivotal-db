@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+require 'pivotal_db'
+require 'configliere'
+
+Settings.use :commandline
+
+pivotal_db_dir = File.expand_path("~/.pivotal_db/")
+Settings({
+           :config_file => pivotal_db_dir + '/config.yml',
+           :project => :default,
+           :default => {
+             :project_id => nil,
+             :api_token => nil,
+             :db_file => pivotal_db_dir + '/pivotal.db'
+           }
+         })
+Settings.resolve!
+Settings.read Settings[:config_file]
+Settings.resolve!
+
+PivotalDb::CLI.start
+

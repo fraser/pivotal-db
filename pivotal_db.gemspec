@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.name        = "pivotal_db"
   s.version     = PivotalDb::VERSION
   s.authors     = ["Fraser Newton"]
-  s.email       = ["fraser.newton@gmail.com"]
+  s.email       = ["fraser@goclio.com"]
   s.homepage    = ""
   s.summary     = %q{TODO: Write a gem summary}
   s.description = %q{TODO: Write a gem description}
@@ -21,4 +21,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
   s.add_dependency "pivotal-tracker", "~>0.4"
   s.add_dependency "sqlite3", "~>1.3"
+  s.add_dependency "data_mapper"
+  s.add_dependency "dm-sqlite-adapter"
+  s.add_dependency "thor"
+  s.add_dependency "configliere"
 end

@@ -1,5 +1,15 @@
 require "pivotal_db/version"
+require "pivotal_db/pivotal_source"
+require "pivotal_db/tracker"
+require "pivotal_db/cli"
+require "pivotal_db/project"
+require "pivotal_db/person"
+require "pivotal_db/membership"
+require "pivotal_db/role"
+require "pivotal_db/story"
+require "pivotal_db/note"
+require "pivotal_db/label"
+require "pivotal_db/labeling"
+require "pivotal_db/story_type"
+require "pivotal_db/story_state"
 
-module PivotalDb
-  # Your code goes here...
-end
