@@ -65,5 +65,12 @@ module PivotalDb
       end
     end
 
+    def to_s
+      str = ""
+      str += "https://www.pivotaltracker.com/story/show/#{self.id}\n"
+      str += "\n#{self.name}\n"
+      str += "\n#{self.description}\n"
+    end
+
   end
 end

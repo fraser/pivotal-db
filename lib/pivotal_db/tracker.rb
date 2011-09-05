@@ -15,6 +15,7 @@ module PivotalDb
       DataMapper::Model.raise_on_save_failure = true
 
       DataMapper.setup(:default, 'sqlite://' + @db_file)
+
       DataMapper.repository(:default).adapter.resource_naming_convention =
         DataMapper::NamingConventions::Resource::UnderscoredAndPluralizedWithoutModule
       DataMapper.finalize
@@ -38,7 +39,23 @@ module PivotalDb
       project.notes.all(:updated_from_datasource.lt => pull_start).destroy
     end
 
-    private
+    def regexp(exp)
+      rexp = Regexp.new(/.*#{exp}.*/mi)
+      project = Project.first(:id => @project_id)
+      found = []
+      project.stories.all(:order => [:story_created_at.desc]).each do |story|
+        if story.name.match(rexp) || story.description.match(rexp)
+          found << story
+        end
+      end
+
+      project.notes.all(:order => [:noted_at.desc]).each do |note|
+        if note.text.match(rexp)
+          found << note.story
+        end
+      end
+      found
+    end
 
   end
 end

@@ -20,5 +20,14 @@ module PivotalDb
       end
     end
 
+
+    desc "regexp", "perform a regular expression search on stories"
+    def regexp(exp)
+      found = Tracker.new(Settings[Settings[:project]]).regexp(exp)
+      found.each do |story|
+        puts story
+      end
+    end
+
   end
 end
