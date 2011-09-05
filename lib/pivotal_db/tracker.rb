@@ -35,8 +35,8 @@ module PivotalDb
       project.pull
       
       # destroy stale records
-      project.stories.all(:updated_from_datasource.lt => pull_start).destroy
-      project.notes.all(:updated_from_datasource.lt => pull_start).destroy
+      project.stories.all(:updated_from_datasource_at.lt => pull_start).destroy
+      project.notes.all(:updated_from_datasource_at.lt => pull_start).destroy
     end
 
     def regexp(exp)

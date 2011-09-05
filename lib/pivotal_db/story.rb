@@ -16,7 +16,7 @@ module PivotalDb
     belongs_to :project
     belongs_to :story_state
     belongs_to :story_type
-    belongs_to :requested_by, 'Person'
+    belongs_to :requested_by, 'Person', :required => false
     belongs_to :owned_by, 'Person', :required => false
 
     has n, :notes, :constraint => :destroy

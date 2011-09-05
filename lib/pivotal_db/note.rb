@@ -11,7 +11,7 @@ module PivotalDb
     property :updated_at, DateTime
 
     belongs_to :story
-    belongs_to :author, 'Person'
+    belongs_to :author, 'Person', :required => false
 
     def find_datasource
       self.story.datasource.notes.all.find{|note_ds| note_ds.id == self.id}

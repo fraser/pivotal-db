@@ -6,7 +6,7 @@ module PivotalDb
       base.extend(ClassMethods)
       
       base.class_eval do
-        property :updated_from_datasource, DateTime
+        property :updated_from_datasource_at, DateTime
       end
     end
 
@@ -24,7 +24,7 @@ module PivotalDb
 
     def pull
       update_from_datasource
-      self.updated_from_datasource = Time.now
+      self.updated_from_datasource_at = Time.now
       self.save
     end
     
