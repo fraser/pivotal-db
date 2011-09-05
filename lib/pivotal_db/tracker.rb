@@ -39,22 +39,18 @@ module PivotalDb
       project.notes.all(:updated_from_datasource_at.lt => pull_start).destroy
     end
 
-    def regexp(exp)
-      rexp = Regexp.new(/.*#{exp}.*/mi)
+    def random
       project = Project.first(:id => @project_id)
-      found = []
-      project.stories.all(:order => [:story_created_at.desc]).each do |story|
-        if story.name.match(rexp) || story.description.match(rexp)
-          found << story
-        end
-      end
+      state_ids = StoryState.all(:name => ["unstarted", "unscheduled", "rejected"]).map{|state| state.id}
+      story_id = DataMapper.repository(:default).adapter.select('SELECT id FROM stories WHERE story_state_id IN ? ORDER BY RANDOM() LIMIT 1', state_ids).first
+      Story.get(story_id)
+    end
 
-      project.notes.all(:order => [:noted_at.desc]).each do |note|
-        if note.text.match(rexp)
-          found << note.story
-        end
-      end
-      found
+    def search(term)
+      project = Project.first(:id => @project_id)
+      state_ids = StoryState.all(:name => ["unstarted", "unscheduled", "rejected"]).map{|state| state.id}
+      story_ids = DataMapper.repository(:default).adapter.select('SELECT id FROM stories WHERE story_state_id IN ? AND (name LIKE ? OR description LIKE ?)', state_ids, "%#{term}%", "%#{term}%")
+      Story.all(:id => story_ids)
     end
 
   end

@@ -66,10 +66,21 @@ module PivotalDb
     end
 
     def to_s
+      requested_by_name = self.requested_by ? self.requested_by.name : ""
+      owned_by_name = self.owned_by ? " => " + self.owned_by.name : ""
       str = ""
       str += "https://www.pivotaltracker.com/story/show/#{self.id}\n"
+      str += "\n" + requested_by_name + owned_by_name + ": " + self.story_created_at.to_s + "\n"
+      str += "\n" + self.story_type.name + ": " + self.labels.map{|label| label.name}.join(", ") + "\n"
       str += "\n#{self.name}\n"
       str += "\n#{self.description}\n"
+      str += "\n#{self.notes.count} Notes\n"
+      unless self.notes.blank?
+        note = self.notes.last
+        str += "\nLatest Note: #{note.author.name}, #{note.noted_at.to_s}\n"
+        str += "\n#{note.text}\n"
+      end
+      str
     end
 
   end

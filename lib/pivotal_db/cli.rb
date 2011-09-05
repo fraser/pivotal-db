@@ -20,11 +20,21 @@ module PivotalDb
       end
     end
 
+    desc "rand", "return a random incomplete story for review"
+    def random
+      tracker = Tracker.new(Settings[Settings[:project]])
+      puts
+      puts tracker.random
+      puts
+    end
 
-    desc "regexp", "perform a regular expression search on stories"
-    def regexp(exp)
-      found = Tracker.new(Settings[Settings[:project]]).regexp(exp)
+    desc "search", "search for the given term in the stories"
+    def search(term)
+      found = Tracker.new(Settings[Settings[:project]]).search(term)
       found.each do |story|
+        puts
+        puts "####################################################"
+        puts
         puts story
       end
     end
