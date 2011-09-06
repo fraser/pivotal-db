@@ -39,11 +39,16 @@ module PivotalDb
       end
     end
 
-    desc "show", "show a particular story by ID"
+    desc "show", "show a particular story by ID or URL"
     def show(story_id)
       tracker = Tracker.new(Settings[Settings[:project]])
+      story_id = story_id.gsub(/.*\//, "")
       story = Story.get(story_id)
-      puts story.to_s(:detailed)
+      if story
+        puts story.to_s(:detailed)
+      else
+        puts "No story found"
+      end
     end
       
   end
