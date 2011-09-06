@@ -70,6 +70,7 @@ module PivotalDb
       owned_by_name = self.owned_by ? " => " + self.owned_by.name : ""
       str = ""
       str += "https://www.pivotaltracker.com/story/show/#{self.id}\n"
+      str += "\nStory #{self.id}\n"
       str += "\n" + requested_by_name + owned_by_name + ": " + self.story_created_at.to_s + "\n"
       str += "\n" + self.story_type.name + ": " + self.labels.map{|label| label.name}.join(", ") + "\n"
       str += "\n#{self.name}\n"
