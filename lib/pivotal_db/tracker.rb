@@ -46,10 +46,14 @@ module PivotalDb
       Story.get(story_id)
     end
 
-    def search(term)
+    def search(term, states = nil)
       project = Project.first(:id => @project_id)
-      state_ids = StoryState.all(:name => ["unstarted", "unscheduled", "rejected"]).map{|state| state.id}
-      story_ids = DataMapper.repository(:default).adapter.select('SELECT id FROM stories WHERE story_state_id IN ? AND (name LIKE ? OR description LIKE ?)', state_ids, "%#{term}%", "%#{term}%")
+      if states.nil?
+        state_ids = StoryState.all.map{|state| state.id}
+      else
+        state_ids = StoryState.all(:name => states).map{|state| state.id}
+      end
+      story_ids = DataMapper.repository(:default).adapter.select('SELECT stories.id FROM stories LEFT JOIN notes ON stories.id = notes.story_id WHERE story_state_id IN ? AND (name LIKE ? OR description LIKE ? OR notes.text LIKE ?)', state_ids, "%#{term}%", "%#{term}%", "%#{term}%")
       Story.all(:id => story_ids)
     end
 
