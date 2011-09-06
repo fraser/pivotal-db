@@ -39,5 +39,12 @@ module PivotalDb
       end
     end
 
+    desc "show", "show a particular story by ID"
+    def show(story_id)
+      tracker = Tracker.new(Settings[Settings[:project]])
+      story = Story.get(story_id)
+      puts story.to_s(:detailed)
+    end
+      
   end
 end

@@ -32,5 +32,12 @@ module PivotalDb
 
     end
 
+    def to_s
+      str = ""
+      str += "#{self.author.name}, #{self.noted_at.to_s}:\n"
+      str += "\n#{self.text}\n"
+      str
+    end
+
   end
 end

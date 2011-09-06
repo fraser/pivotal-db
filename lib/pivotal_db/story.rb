@@ -65,7 +65,7 @@ module PivotalDb
       end
     end
 
-    def to_s
+    def to_s(str_type = nil)
       requested_by_name = self.requested_by ? self.requested_by.name : ""
       owned_by_name = self.owned_by ? " => " + self.owned_by.name : ""
       str = ""
@@ -74,11 +74,18 @@ module PivotalDb
       str += "\n" + self.story_type.name + ": " + self.labels.map{|label| label.name}.join(", ") + "\n"
       str += "\n#{self.name}\n"
       str += "\n#{self.description}\n"
-      str += "\n#{self.notes.count} Notes\n"
-      unless self.notes.blank?
-        note = self.notes.last
-        str += "\nLatest Note: #{note.author.name}, #{note.noted_at.to_s}\n"
-        str += "\n#{note.text}\n"
+      sorted_notes = self.notes.all(:order => [:noted_at.asc])
+      str += "\n#{sorted_notes.count} Notes\n"
+      if str_type == :detailed
+        sorted_notes.each do |note|
+          str += note.to_s + "\n"
+        end
+      else
+        unless sorted_notes.blank?
+          note = sorted_notes.last
+          str += "\nLatest Note:\n"
+          str += note.to_s
+        end
       end
       str
     end
