@@ -3,9 +3,9 @@
 require 'pivotal_db'
 require 'configliere'
 
-Settings.use :commandline
-
 pivotal_db_dir = File.expand_path("~/.pivotal_db/")
+
+Settings.use :commandline
 Settings({
            :config_file => pivotal_db_dir + '/config.yml',
            :project => :default,
@@ -16,6 +16,22 @@ Settings({
            }
          })
 Settings.resolve!
+
+unless File.exist?(Settings[:config_file])
+  puts "The configuration file #{Settings[:config_file]} does not exist."
+  puts "Please create one like the following example."
+  puts
+  puts "default:"
+  puts "  project_id: 123"
+  puts "  api_token: secret"
+  puts "  db_file: ~/.pivotal_db/pivotal.db"
+  puts
+  puts "The API token can be found on Pivotal Tracker at"
+  puts "  https://www.pivotaltracker.com/profile"
+  Process.exit
+end
+
+Settings.use :commandline
 Settings.read Settings[:config_file]
 Settings.resolve!
 
