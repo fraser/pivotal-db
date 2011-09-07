@@ -20,7 +20,7 @@ module PivotalDb
       end
     end
 
-    desc "rand", "return a random incomplete story for review"
+    desc "random", "return a random incomplete story for review"
     def random
       tracker = Tracker.new(Settings[Settings[:project]])
       puts
