@@ -11,7 +11,7 @@ module PivotalDb
       puts "Notes: #{Note.all.count}"
     end
 
-    desc "pull", "pull updates from pivotal tracker"
+    desc "pull", "pull all stories from Pivotal Tracker (this may take a while)"
     def pull
       begin
         Tracker.new(Settings[Settings[:project]]).pull
