@@ -31,11 +31,11 @@ module PivotalDb
     desc "search", "search for the given term in the stories"
     def search(term)
       found = Tracker.new(Settings[Settings[:project]]).search(term)
+      puts "#{found.count} Results"
       found.each do |story|
         puts
-        puts "####################################################"
+        puts story.to_s(:brief)
         puts
-        puts story
       end
     end
 
