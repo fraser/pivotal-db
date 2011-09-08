@@ -41,7 +41,7 @@ module PivotalDb
 
     def random
       project = Project.first(:id => @project_id)
-      state_ids = StoryState.all(:name => ["unstarted", "unscheduled", "rejected"]).map{|state| state.id}
+      state_ids = StoryState.all(:name => ["unscheduled", "unstarted", "started", "rejected"]).map{|state| state.id}
       story_id = DataMapper.repository(:default).adapter.select('SELECT id FROM stories WHERE story_state_id IN ? ORDER BY RANDOM() LIMIT 1', state_ids).first
       Story.get(story_id)
     end

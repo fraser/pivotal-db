@@ -29,8 +29,14 @@ module PivotalDb
     end
 
     desc "search", "search for the given term in the stories"
+    method_option :includedone, :type => :boolean, :desc => "include done (finished, delivered, accepted) stories"
     def search(term)
-      found = Tracker.new(Settings[Settings[:project]]).search(term)
+      tracker = Tracker.new(Settings[Settings[:project]])
+      states = ["unscheduled", "unstarted", "started", "rejected"]
+      if options.includedone?
+        states += ["finished", "delivered", "accepted"]
+      end
+      found = tracker.search(term, states)
       puts "#{found.count} Results"
       found.each do |story|
         puts
